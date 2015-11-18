@@ -25,6 +25,11 @@ def mainthread():
         time.sleep(250)
 
 if __name__ == '__main__':
+    ##############################################
+    #   Forberedelsesfase
+    ##############################################
+    # Laste inn highscore hær.
+    #Gjøre det klart for at vi kan stoppe timer
     t = threading.Thread(target=mainthread)
     # t.daemon = True
     t.start()
@@ -36,6 +41,13 @@ if __name__ == '__main__':
     turtle.register_shape("playership.gif", shape = None)
     for i in range(0, 5):
         npcs.append(game.NPC(space, npcradius))
+
+    ##############################################
+    #  Spillet kjører
+    ##############################################
+    #La spiller skrive inn navn
+    # Starte timer
+
 
 
     turtle.mainloop()
