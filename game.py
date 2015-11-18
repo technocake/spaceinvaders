@@ -14,7 +14,7 @@ class Character(turtle.Turtle): #note capiptal letter in beginning of class name
     def __repr__(self):
         return ""
 
-    def canmove(self, x, y):
+    def canmove(self, x, y=None):
         "function checks if character is allowed to move within space, returns false if trying to move without of bounds (self.space)"
         # write function for checking if can move within space
         if y is None:
@@ -46,7 +46,7 @@ class Pc(Character):
 
 
 class NPC(Character):
-    def getxyfromfwd(self, dist=50):
+    def getxyfromfwd(self, dist=5):
         # calculate coordinates from distance given setheading
         pos = self.pos()
         ang = self.heading()
@@ -58,11 +58,13 @@ class NPC(Character):
         delay_ms = self.fart / 1000
         while True:
             sleep(delay_ms)
-            print('running')
-            self.move(self.getxyfromfwd())
+            dest = self.getxyfromfwd()
+            if self.canmove(dest):
+                self.goto(dest)
+            else:
+                self.setheading(randrange(360))
 
-
-    def __init__(self, space, radius, fart=250):
+    def __init__(self, space, radius, fart=20):
         super(NPC, self).__init__(space) # another way of Character.__init__(self)
         turtle.tracer(50)
         self.shape("Alienship.gif")
@@ -73,5 +75,4 @@ class NPC(Character):
         self.t = threading.Thread(target=self.movement)
         self.t.start()
         turtle.tracer(1)
-
 
