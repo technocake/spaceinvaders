@@ -37,8 +37,16 @@ def turnright():
     player.right(step)
 
 def mainthread():
+    print('thread started')
     while True:
-        time.sleep(250)
+        time.sleep(0.9)
+        for npc in npcs:
+            if npc.collisionwith(player.pos()):
+                player.mistliv()
+                print(player.hitpoints)
+                if -1 < player.hitpoints < 1:
+                    print('GAME OVER')
+                    highscore.stoptid()
 
 if __name__ == '__main__':
     ##############################################
@@ -47,30 +55,16 @@ if __name__ == '__main__':
     # Laste inn highscore hær.
     highscore.lastinnhighscorefil("highscoreliste.txt")
     #Gjøre det klart for at vi kan stoppe timer
-
     t = threading.Thread(target=mainthread)
     t.daemon = True
 
-
     space = turtle.screensize()
-    npcradius = 20
+    npcradius = 100
     npcs = []
     turtle.register_shape("Alienship.gif", shape = None)
     turtle.register_shape("playership.gif", shape = None)
-    for i in range(0, 5):
-        npcs.append(game.NPC(space, npcradius, 20, 5))
 
-    playercount = 1
-    players = []
-    for i in range(0, playercount):
-        players.append(game.PC(3, space))
-    player = players[0]
-    player.goto(200,200)
     loadkeystoturtle()
-
-    turtle.listen()
-
-    t.start()
     ##############################################
     #  Spillet kjører
     ##############################################
@@ -79,8 +73,19 @@ if __name__ == '__main__':
     # Starte timer
     highscore.starttid()
 
+    for i in range(0, 5):
+        npcs.append(game.NPC(space, npcradius, 20, 5))
 
+    playercount = 1
+    players = []
+    for i in range(0, playercount):
+        players.append(game.PC(3, space, "classic"))
+    player = players[0]
+    player.goto(200,200)
 
+    t.start()
+
+    turtle.listen()
     turtle.mainloop()
 
 

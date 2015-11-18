@@ -29,9 +29,7 @@ class Character(turtle.Turtle): #note capiptal letter in beginning of class name
         else:
             dest = [x,y]
         if self.canmove(dest):
-            turtle.tracer(50)
             self.goto(dest)
-            turtle.tracer(1)
             return True
         else:
             return False
@@ -45,12 +43,12 @@ class Character(turtle.Turtle): #note capiptal letter in beginning of class name
         return dest
 
 class PC(Character):
-    def __init__(self, helse, space):
+    def __init__(self, helse, space, shape="playership.gif"):
         Character.__init__(self, space)
         self.hitpoints = helse
-        self.shape("playership.gif")
+        self.shape(shape)
     def mistliv(self):
-        self.hitpoints = self.hitpoints - 1
+        self.hitpoints -= 1
 
 class NPC(Character):
 
@@ -64,6 +62,19 @@ class NPC(Character):
                 self.goto(dest)
             else:
                 self.setheading(randrange(360))
+
+    def collisionwith(self, x, y=None):
+        if y is None:
+            collider = x
+        else:
+            collider = [x,y]
+        sx = self.pos()[0] # self pos x
+        sy = self.pos()[1] # self pos y
+        cx = collider[0] # collider x
+        cy = collider[1] # collider y
+
+        return (cx - sx)**2 + (cy - sy)**2 < self.radius**2
+
 
     def __init__(self, space, radius, fart=20, dist=5):
         super(NPC, self).__init__(space) # another way of Character.__init__(self)
