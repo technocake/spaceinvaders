@@ -37,5 +37,9 @@ def lagretilhighscore(filnavn):
     #Lagrer highscoren i en fil
     pass
 
+def displayhighscore():
+    #viser highscore på skjermen
+    pass
+
 
 
