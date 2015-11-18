@@ -1,8 +1,15 @@
+import turtle
+highscorelist = {}
+
 
 def playername():
+    global highscorelist
     #får navn fra spiller og legger det til i highscore listen
     #returnerer spillernavn
-    pass
+
+    player =  turtle.textinput("player", "input your name")
+    highscorelist[player] = 0
+    return player
 
 def starttid():
     #starter en timer

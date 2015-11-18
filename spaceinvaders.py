@@ -1,5 +1,6 @@
 import turtle
 import game
+import highscore
 
 import configparser
 import sys
@@ -44,7 +45,9 @@ if __name__ == '__main__':
     #   Forberedelsesfase
     ##############################################
     # Laste inn highscore hær.
+    highscore.lastinnhighscorefil("highscoreliste.txt")
     #Gjøre det klart for at vi kan stoppe timer
+
     t = threading.Thread(target=mainthread)
     t.daemon = True
 
@@ -72,7 +75,9 @@ if __name__ == '__main__':
     #  Spillet kjører
     ##############################################
     #La spiller skrive inn navn
+    highscore.playername()
     # Starte timer
+    highscore.starttid()
 
 
 
