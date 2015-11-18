@@ -36,16 +36,6 @@ class Character(turtle.Turtle): #note capiptal letter in beginning of class name
         else:
             return False
 
-class Pc(Character):
-    def __init__(self, helse, space):
-        Character.__init__(self, space)
-        self.hitpoints = helse
-        self.shape("playership.gif")
-    def mistliv(self):
-        self.hitpoints = self.hitpoints - 1
-
-
-class NPC(Character):
     def getxyfromfwd(self, dist=5):
         # calculate coordinates from distance given setheading
         pos = self.pos()
@@ -54,25 +44,38 @@ class NPC(Character):
         dest = [pos[0] + cos(rad) * dist, pos[1] + sin(rad) * dist]
         return dest
 
+class PC(Character):
+    def __init__(self, helse, space):
+        Character.__init__(self, space)
+        self.hitpoints = helse
+        self.shape("playership.gif")
+    def mistliv(self):
+        self.hitpoints = self.hitpoints - 1
+
+class NPC(Character):
+
+
     def movement(self):
         delay_ms = self.fart / 1000
         while True:
             sleep(delay_ms)
-            dest = self.getxyfromfwd()
+            dest = self.getxyfromfwd(self.distprmove)
             if self.canmove(dest):
                 self.goto(dest)
             else:
                 self.setheading(randrange(360))
 
-    def __init__(self, space, radius, fart=20):
+    def __init__(self, space, radius, fart=20, dist=5):
         super(NPC, self).__init__(space) # another way of Character.__init__(self)
         turtle.tracer(50)
         self.shape("Alienship.gif")
+        self.distprmove = dist
         self.space = space
         self.radius = radius
         self.fart = fart
         self.setheading(randrange(360))
         self.t = threading.Thread(target=self.movement)
+        self.t.daemon = True
         self.t.start()
         turtle.tracer(1)
 

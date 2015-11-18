@@ -7,7 +7,7 @@ import threading
 import time
 from random import randrange
 
-def loadkeystoturtle(targetturtle):
+def loadkeystoturtle():
     config = configparser.ConfigParser()
     config.optionxform=str  # preserve case
     config.read('config.ini')
@@ -18,7 +18,22 @@ def loadkeystoturtle(targetturtle):
                 obta = sys.modules[__name__]
                 if hasattr(obta, name):
                     func = getattr(obta, name) # a function with no arguments or None
-                    targetturtle.onkeypress(func, key)
+                    # try:
+                    turtle.onkeypress(func, key)
+                    # except:
+                    #     print('binding', func, 'to', key, 'failed')
+                    #     pass
+
+step = 5
+
+def forward():
+    player.move(player.getxyfromfwd(step))
+
+def turnleft():
+    player.left(step)
+
+def turnright():
+    player.right(step)
 
 def mainthread():
     while True:
@@ -31,8 +46,8 @@ if __name__ == '__main__':
     # Laste inn highscore hær.
     #Gjøre det klart for at vi kan stoppe timer
     t = threading.Thread(target=mainthread)
-    # t.daemon = True
-    t.start()
+    t.daemon = True
+
 
     space = turtle.screensize()
     npcradius = 20
@@ -40,10 +55,19 @@ if __name__ == '__main__':
     turtle.register_shape("Alienship.gif", shape = None)
     turtle.register_shape("playership.gif", shape = None)
     for i in range(0, 5):
-        npcs.append(game.NPC(space, npcradius))
+        npcs.append(game.NPC(space, npcradius, 20, 5))
+
+    playercount = 1
+    players = []
+    for i in range(0, playercount):
+        players.append(game.PC(3, space))
+    player = players[0]
+    player.goto(200,200)
+    loadkeystoturtle()
 
     turtle.listen()
 
+    t.start()
     ##############################################
     #  Spillet kjører
     ##############################################
