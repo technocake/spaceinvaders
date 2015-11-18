@@ -24,28 +24,6 @@ def mainthread():
     while True:
         time.sleep(250)
 
-ctrl = 0
-def setctrl1():
-    global ctrl
-    ctrl = 0
-def setctrl2():
-    global ctrl
-    ctrl = 1
-def setctrl3():
-    global ctrl
-    ctrl = 2
-def setctrl4():
-    global ctrl
-    ctrl = 3
-def setctrl5():
-    global ctrl
-    ctrl = 4
-
-def gofwd():
-    npcs[ctrl].forward(5)
-def gorev():
-    npcs[ctrl].backward(5)
-
 if __name__ == '__main__':
     ##############################################
     #   Forberedelsesfase
@@ -63,16 +41,6 @@ if __name__ == '__main__':
     turtle.register_shape("playership.gif", shape = None)
     for i in range(0, 5):
         npcs.append(game.NPC(space, npcradius))
-    # for npc in npcs:
-    #     npc.forward(200)
-
-    turtle.onkeypress(setctrl1, '1')
-    turtle.onkeypress(setctrl2, '2')
-    turtle.onkeypress(setctrl3, '3')
-    turtle.onkeypress(setctrl4, '4')
-    turtle.onkeypress(setctrl5, '5')
-    turtle.onkeypress(gofwd, 'Up')
-    turtle.onkeypress(gorev, 'Down')
 
     turtle.listen()
 
@@ -85,3 +53,5 @@ if __name__ == '__main__':
 
 
     turtle.mainloop()
+
+
