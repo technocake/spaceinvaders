@@ -17,12 +17,20 @@ class Character(turtle.Turtle): #note capiptal letter in beginning of class name
     def canmove(self, x, y):
         "function checks if character is allowed to move within space, returns false if trying to move without of bounds (self.space)"
         # write function for checking if can move within space
-        return -1 * self.space[0] < x < self.space[0] and -1 * self.space[1] < y < self.space[1]
+        if y is None:
+            dest = x
+        else:
+            dest = [x,y]
+        return -1 * self.space[0] < dest[0] < self.space[0] and -1 * self.space[1] < dest[1] < self.space[1]
 
-    def move(self, x, y):
-        if self.canmove(x, y):
+    def move(self, x, y=None):
+        if y is None:
+            dest = x
+        else:
+            dest = [x,y]
+        if self.canmove(dest):
             turtle.tracer(50)
-            self.goto(x, y)
+            self.goto(dest)
             turtle.tracer(1)
             return True
         else:
@@ -38,9 +46,8 @@ class Pc(Character):
 
 
 class NPC(Character):
-    def getxyfromfwd(self, distance):
+    def getxyfromfwd(self, dist=50):
         # calculate coordinates from distance given setheading
-        dist = 50
         pos = self.pos()
         ang = self.heading()
         rad = radians(ang)
@@ -48,8 +55,12 @@ class NPC(Character):
         return dest
 
     def movement(self):
+        delay_ms = self.fart / 1000
         while True:
-            sleep(self.fart)
+            sleep(delay_ms)
+            print('running')
+            self.move(self.getxyfromfwd())
+
 
     def __init__(self, space, radius, fart=250):
         super(NPC, self).__init__(space) # another way of Character.__init__(self)

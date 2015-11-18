@@ -58,8 +58,8 @@ if __name__ == '__main__':
     turtle.register_shape("playership.gif", shape = None)
     for i in range(0, 5):
         npcs.append(game.NPC(space, npcradius))
-    for npc in npcs:
-        npc.forward(200)
+    # for npc in npcs:
+    #     npc.forward(200)
 
     turtle.onkeypress(setctrl1, '1')
     turtle.onkeypress(setctrl2, '2')
