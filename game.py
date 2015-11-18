@@ -2,6 +2,7 @@ import turtle
 import threading
 from time import sleep
 from random import randrange
+from math import radians, cos, sin
 
 class Character(turtle.Turtle): #note capiptal letter in beginning of class name
     def __init__(self, space):
@@ -39,8 +40,12 @@ class Pc(Character):
 class NPC(Character):
     def getxyfromfwd(self, distance):
         # calculate coordinates from distance given setheading
-        self.heading()
-        return [0,0]
+        dist = 50
+        pos = self.pos()
+        ang = self.heading()
+        rad = radians(ang)
+        dest = [pos[0] + cos(rad) * dist, pos[1] + sin(rad) * dist]
+        return dest
 
     def movement(self):
         while True:
